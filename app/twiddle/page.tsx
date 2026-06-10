@@ -4,27 +4,27 @@ const product: ProductData = {
   name: "twiddle",
   slug: "twiddle",
   color: "#009ED6",
-  tagline: "Precision in every interaction.",
+  heroImage: "/twiddle-hero.jpg",
+  tagline: "저기.. 콘센트 좀 쓸 수 있을까요?",
   description:
-    "Twiddle brings control to your fingertips. Designed for those who demand exactness in every gesture — a product that rewards attention to detail.",
+    "태엽이 손에 닿지 않는 위치에 설계되어 있다. 충전하려면 옆 사람의 손이 필요하다. 정확히 2바퀴.",
   features: [
     {
       num: "01",
-      title: "Haptic precision",
-      body: "Sub-millimeter feedback with tactile response that confirms every input before you've consciously registered it.",
+      title: "태엽 키",
+      body: "손이 닿지 않는 위치. 설계된 불편함.",
     },
     {
       num: "02",
-      title: "Responsive interface",
-      body: "Instantaneous. No lag, no interpretation required. Your input, exactly as intended, every single time.",
+      title: "2바퀴",
+      body: "정확히 2바퀴. 그 이상도 이하도 아니다.",
     },
     {
       num: "03",
-      title: "Adaptive calibration",
-      body: "Learns your preference over time. The longer you use it, the more precisely it fits the way you move.",
+      title: "듀얼 유닛",
+      body: "두 유닛이 나란히 붙어있다.",
     },
   ],
-  stat: { value: "0.3ms", label: "response time" },
   others: [
     { name: "orbit", slug: "orbit", color: "#F1C300" },
     { name: "tipsy", slug: "tipsy", color: "#EB0018" },

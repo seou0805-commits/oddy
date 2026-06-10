@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const LINKS = [
+  { name: "intro",   href: "/",        color: "#1a1a1a" },
   { name: "orbit",   href: "/orbit",   color: "#F1C300" },
   { name: "twiddle", href: "/twiddle", color: "#009ED6" },
   { name: "tipsy",   href: "/tipsy",   color: "#EB0018" },
@@ -22,21 +23,19 @@ export default function Nav() {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 h-[48px] transition-all duration-300"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between h-[48px] transition-all duration-300"
       style={{
+        paddingLeft: "max(24px, 5vw)",
+        paddingRight: "max(24px, 5vw)",
         background: "rgba(255,255,255,0.85)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        borderBottom: scrolled
-          ? "1px solid rgba(0,0,0,0.08)"
-          : "1px solid transparent",
+        borderBottom: "2px solid rgba(0,0,0,0.12)",
       }}
     >
-      <Link
-        href="/"
-        className="text-[17px] font-semibold text-[#1d1d1f] hover:opacity-50 transition-opacity duration-200"
-      >
-        oddy
+      <Link href="/" className="hover:opacity-60 transition-opacity duration-200">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.png" alt="oddy" style={{ height: "18px", width: "auto" }} />
       </Link>
 
       <ul className="flex gap-8 list-none">
