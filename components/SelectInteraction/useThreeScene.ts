@@ -18,6 +18,23 @@ const PRODUCTS = [
   { file: "/models/tipsy.glb",   name: "tipsy",   rotY: 0 },
 ]
 
+const mixers: (THREE.AnimationMixer | null)[] = [null, null, null]
+const actions: (THREE.AnimationAction | null)[] = [null, null, null]
+
+export function playGimmick(idx: number) {
+  const action = actions[idx]
+  if (!action) return
+  action.reset()
+  action.setLoop(THREE.LoopRepeat, Infinity)
+  action.play()
+}
+
+export function stopGimmick(idx: number) {
+  const action = actions[idx]
+  if (!action) return
+  action.stop()
+}
+
 export function useThreeScene(
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
   onModelsLoaded: (models: THREE.Group[]) => void
@@ -68,25 +85,31 @@ export function useThreeScene(
         prod.file,
         (gltf) => {
           const model = gltf.scene
-
-          // Apply per-model initial rotation before computing bounds
           model.rotation.y = prod.rotY
 
-          // Compute bounding box and normalize model size/position
           const box = new THREE.Box3().setFromObject(model)
           const size = box.getSize(new THREE.Vector3())
           const maxDim = Math.max(size.x, size.y, size.z)
           const scaleFactor = 2.0 / maxDim
           model.scale.setScalar(scaleFactor)
 
-          // Center vertically after scaling
           const boxAfter = new THREE.Box3().setFromObject(model)
           const centerY = (boxAfter.min.y + boxAfter.max.y) / 2
           model.position.y = -centerY
 
-          // Wrap in a group so we can move the group without affecting centering
           const group = new THREE.Group()
           group.add(model)
+
+          if (gltf.animations.length > 0) {
+            const mixer = new THREE.AnimationMixer(model)
+            mixers[i] = mixer
+            const action = mixer.clipAction(gltf.animations[0])
+            action.stop()
+            actions[i] = action
+          } else {
+            mixers[i] = null
+            actions[i] = null
+          }
 
           refsRef.current.models[i] = group
           scene.add(group)
@@ -100,12 +123,14 @@ export function useThreeScene(
         undefined,
         (err) => {
           console.warn(`Failed to load ${prod.file}:`, err)
-          // Create a placeholder box so the carousel still works
           const geo = new THREE.BoxGeometry(1, 1.5, 0.8)
           const mat = new THREE.MeshStandardMaterial({ color: 0xd0d0d0 })
           const mesh = new THREE.Mesh(geo, mat)
           const group = new THREE.Group()
           group.add(mesh)
+
+          mixers[i] = null
+          actions[i] = null
 
           refsRef.current.models[i] = group
           scene.add(group)
@@ -119,9 +144,12 @@ export function useThreeScene(
       )
     })
 
+    const clock = new THREE.Clock()
     let rafId: number
     const animate = () => {
       rafId = requestAnimationFrame(animate)
+      const delta = clock.getDelta()
+      mixers.forEach((m) => m?.update(delta))
       renderer.render(scene, camera)
     }
     animate()
@@ -140,6 +168,8 @@ export function useThreeScene(
       window.removeEventListener("resize", handleResize)
       renderer.dispose()
       dracoLoader.dispose()
+      mixers.fill(null)
+      actions.fill(null)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
