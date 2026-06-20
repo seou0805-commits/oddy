@@ -37,22 +37,37 @@ export default function Home() {
           background: "#000",
         }}
       >
-        {/* <video autoPlay muted loop playsInline><source src="/hero-bg-compressed.mp4" type="video/mp4" /></video> */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 0,
+          }}
+        >
+          <source src="/hero-bg-compressed.mp4" type="video/mp4" />
+        </video>
         <div
           style={{
             position: "absolute",
             inset: 0,
             width: "100%",
             height: "100%",
-            opacity: 0.55,
-            zIndex: 0,
+            background: "rgba(0,0,0,0.55)",
+            zIndex: 1,
           }}
         />
 
         <div
           style={{
             position: "relative",
-            zIndex: 1,
+            zIndex: 2,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -84,7 +99,7 @@ export default function Home() {
             bottom: "48px",
             left: "50%",
             transform: "translateX(-50%)",
-            zIndex: 1,
+            zIndex: 2,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -315,7 +330,7 @@ export default function Home() {
           height: "80vh",
         }}
       >
-        {/* <video autoPlay muted loop playsInline><source src="/hero-bg-compressed.mp4" type="video/mp4" /></video> */}
+        <video autoPlay muted loop playsInline style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.8,zIndex:0}}><source src="/hero-bg-compressed.mp4" type="video/mp4" /></video>
         <div
           style={{
             position: "absolute",
