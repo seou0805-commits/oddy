@@ -51,7 +51,7 @@ export default function Home() {
             zIndex: 0,
           }}
         >
-          <source src="/hero-bg-compressed.mp4" type="video/mp4" />
+          <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
         <div
           style={{
@@ -330,7 +330,7 @@ export default function Home() {
           height: "80vh",
         }}
       >
-        <video autoPlay muted loop playsInline style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.8,zIndex:0}}><source src="/hero-bg-compressed.mp4" type="video/mp4" /></video>
+        <video autoPlay muted loop playsInline style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:0.8,zIndex:0}}><source src="/hero-bg.mp4" type="video/mp4" /></video>
         <div
           style={{
             position: "absolute",
