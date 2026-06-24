@@ -5,9 +5,22 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   experimental: {
-    optimizePackageImports: [],
+    optimizePackageImports: ["three"],
   },
   webpack(config, { dev, isServer, webpack }) {
+    if (!dev) {
+      config.devtool = false;
+    }
+
+    // public/catalog/ 파일은 webpack 처리 없이 정적 파일로만 서빙
+    config.module.rules.push({
+      test: /public[\\/]catalog[\\/]/,
+      type: "asset/resource",
+      generator: {
+        emit: false,
+      },
+    });
+
     if (dev) {
       config.plugins.push(
         new webpack.ProgressPlugin((percentage: number, message: string) => {

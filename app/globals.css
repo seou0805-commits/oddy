@@ -27,11 +27,11 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
-.svg-o  { fill: #fff; transition: fill 0.3s ease; cursor: default; }
+.svg-o  { fill: #fff; cursor: default; }
 .svg-o:hover  { fill: #EB0018; }
-.svg-dd { fill: #fff; transition: fill 0.3s ease; cursor: default; }
+.svg-dd { fill: #fff; cursor: default; }
 .svg-dd:hover { fill: #009ED6; }
-.svg-y  { fill: #fff; transition: fill 0.3s ease; cursor: default; }
+.svg-y  { fill: #fff; cursor: default; }
 .svg-y:hover  { fill: #F1C300; }
 
 @keyframes blink {

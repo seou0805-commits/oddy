@@ -8,271 +8,112 @@ const SelectInteraction = dynamic(
   { ssr: false }
 )
 
+const CatalogFlipbook = dynamic(
+  () => import("../components/CatalogFlipbook"),
+  { ssr: false }
+)
+
 const hPad: React.CSSProperties = {
   paddingLeft: "max(24px, 8vw)",
   paddingRight: "max(24px, 8vw)",
 }
 
-const PRODUCTS = [
-  { name: "orbit",   color: "#F1C300", tagline: "저기.. 혹시 시간 좀 알 수 있을까요?" },
-  { name: "twiddle", color: "#009ED6", tagline: "저기.. 콘센트 좀 쓸 수 있을까요?"    },
-  { name: "tipsy",   color: "#EB0018", tagline: "저기.. 혹시 냅킨 한 장만..?"         },
-]
 
 export default function Home() {
   return (
     <main style={{ background: "#fff", color: "#1d1d1f" }}>
 
-      {/* ── 1. Hero ─────────────────────────────────────────────────────── */}
+      {/* ── 1. Hero — 3분할 영상 ────────────────────────────────────────── */}
       <section
-        style={{
-          position: "relative",
-          minHeight: "100vh",
-          width: "100%",
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#000",
-        }}
+        data-nav-theme="dark"
+        style={{ display: "flex", height: "100vh", overflow: "hidden" }}
       >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: 0,
-          }}
-        >
-          <source src="/hero-bg.mp4" type="video/mp4" />
-        </video>
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            background: "rgba(0,0,0,0.55)",
-            zIndex: 1,
-          }}
-        />
-
-        <div
-          style={{
-            position: "relative",
-            zIndex: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            ...hPad,
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/hero.png"
-            alt="oddy"
-            style={{ width: "clamp(200px, 40vw, 480px)", height: "auto" }}
-          />
-          <p
-            style={{
-              fontSize: "clamp(15px, 2vw, 21px)",
-              color: "rgba(255,255,255,0.65)",
-              marginTop: "28px",
-              letterSpacing: "0.01em",
-            }}
-          >
-            낯선 사람과 대화하게 만드는 물건들
-          </p>
-        </div>
-
-        <div
-          style={{
-            position: "absolute",
-            bottom: "48px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "12px",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "11px",
-              color: "rgba(255,255,255,0.35)",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-            }}
-          >
-            scroll
-          </span>
-          <div
-            className="scroll-line"
-            style={{ width: "1px", height: "60px", background: "rgba(255,255,255,0.35)" }}
-          />
-        </div>
-      </section>
-
-      {/* ── 2. Statistics ───────────────────────────────────────────────── */}
-      <section style={{ background: "#fff", paddingTop: "120px", paddingBottom: "120px", ...hPad }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "48px" }}>
-          {[
-            { value: "3",  label: "Objects" },
-            { value: "1",  label: "Conversation" },
-            { value: "0",  label: "Words needed" },
-          ].map(({ value, label }) => (
-            <div key={label} style={{ borderTop: "1px solid #d2d2d7", paddingTop: "24px" }}>
-              <div
-                style={{
-                  fontSize: "clamp(48px, 6vw, 80px)",
-                  fontWeight: 600,
-                  color: "#1d1d1f",
-                  letterSpacing: "-0.03em",
-                  lineHeight: 1,
-                }}
-              >
-                {value}
-              </div>
-              <div style={{ fontSize: "13px", color: "#6e6e73", marginTop: "10px", letterSpacing: "0.02em" }}>
-                {label}
-              </div>
-            </div>
-          ))}
-        </div>
+        {[
+          { src: "/orbit.mp4",   label: "orbit"   },
+          { src: "/twiddle.mp4", label: "twiddle" },
+          { src: "/tipsy.mp4",   label: "tipsy"   },
+        ].map(({ src, label }) => (
+          <div key={label} style={{ width: "33.333%", height: "100%", overflow: "hidden", flexShrink: 0 }}>
+            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }}
+            >
+              <source src={src} type="video/mp4" />
+            </video>
+          </div>
+        ))}
       </section>
 
       {/* ── 3. Waiting Slogan ───────────────────────────────────────────── */}
       <section
+        data-nav-theme="light"
         style={{
-          background: "#f5f5f7",
+          background: "#ffffff",
           paddingTop: "160px",
           paddingBottom: "160px",
           textAlign: "center",
           ...hPad,
         }}
       >
-        <p
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.svg" alt="oddy" style={{ height: "40px", width: "auto", margin: "0 auto 40px", display: "block" }} />
+        <div
           style={{
-            fontSize: "12px",
-            color: "#6e6e73",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            marginBottom: "24px",
-          }}
-        >
-          귀여운 불편함
-        </p>
-        <h2
-          style={{
-            fontSize: "clamp(40px, 6vw, 80px)",
-            fontWeight: 600,
+            fontSize: "24px",
+            fontWeight: 400,
             color: "#1d1d1f",
-            letterSpacing: "-0.03em",
-            lineHeight: 1.15,
+            lineHeight: 1.8,
+            textAlign: "center",
             maxWidth: "800px",
             margin: "0 auto",
           }}
         >
-          기다리는 사이,<br />대화가 시작된다
-        </h2>
+          <p style={{ margin: 0 }}>
+            디지털의 발전은 주고받는 대화의 양과 편의를 폭발적으로 늘렸다.<br />
+            SNS, 번역 어플, Ai를 통한 문법 교정 등 누구를 만날 필요 없이<br />
+            언제, 어디서나, 누구와도 대화를 할 수 있는 시기가 되었다.<br />
+            하지만 역설적이게도 젠지스테어, 콜포비아 등 타인과의<br />
+            소통을 가장 두려워하는 시대이기도 하다.
+          </p>
+          <p style={{ margin: 0, marginTop: "2em" }}>
+            대화가 부담스럽다면, 불편함이 부담스럽다면.<br />
+            대화를 촉발시키는 불편함을 귀엽게 만든다면 어떨까?
+          </p>
+          <p style={{ margin: 0, marginTop: "2em" }}>
+            oddy는 소통이 점점 사라지는 시대에, 타인과의 대화를<br />
+            &apos;귀여운 불편함&apos;으로 만드는 인테리어 브랜드다.
+          </p>
+          <p style={{ margin: 0, marginTop: "2em" }}>
+            말을 걸기 어려운 당신을 위해, 제품이 먼저 핑계가 되어준다.
+          </p>
+          <p style={{ margin: 0, marginTop: "2em", fontWeight: 700 }}>
+            우리 한 번 불편해보자 :)
+          </p>
+        </div>
       </section>
 
-      {/* ── 4. Product Images ───────────────────────────────────────────── */}
-      <section style={{ background: "#fff", paddingTop: "120px", paddingBottom: "0" }}>
-        <div style={{ ...hPad, marginBottom: "48px" }}>
-          <h2
-            style={{
-              fontSize: "clamp(28px, 4vw, 48px)",
-              fontWeight: 600,
-              color: "#1d1d1f",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            세 가지 물건
-          </h2>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "3px" }}>
-          {PRODUCTS.map((p) => (
-            <Link
-              key={p.name}
-              href={`/product/${p.name}`}
-              style={{ textDecoration: "none", display: "block" }}
-            >
-              <div
-                style={{
-                  position: "relative",
-                  aspectRatio: "3/4",
-                  overflow: "hidden",
-                  background: "#f5f5f7",
-                }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`/${p.name}-hero.jpg`}
-                  alt={p.name}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                    transition: "transform 0.6s ease",
-                  }}
-                  onMouseEnter={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)")}
-                  onMouseLeave={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1)")}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    padding: "32px 28px",
-                    background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      color: p.color,
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      marginBottom: "6px",
-                    }}
-                  >
-                    oddy
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "clamp(20px, 3vw, 32px)",
-                      fontWeight: 600,
-                      color: "#fff",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {p.name}
-                  </div>
-                  <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)", marginTop: "6px" }}>
-                    {p.tagline}
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+      {/* ── 4. Catalog Flipbook ─────────────────────────────────────────── */}
+      <section
+        data-nav-theme="light"
+        style={{
+          background: "#fff",
+          paddingTop: "120px",
+          paddingBottom: "80px",
+          display: "flex",
+          justifyContent: "center",
+          overflow: "visible",
+        }}
+      >
+        <CatalogFlipbook />
       </section>
 
       {/* ── 5. Closer Interaction ───────────────────────────────────────── */}
-      <section style={{ background: "#f5f5f7", paddingTop: "120px", paddingBottom: "120px", ...hPad }}>
+      <section data-nav-theme="light" style={{ background: "#f5f5f7", paddingTop: "120px", paddingBottom: "120px", ...hPad }}>
         <div style={{ display: "flex", alignItems: "center", gap: "80px", flexWrap: "wrap" }}>
           <div style={{ flex: "1 1 300px", minWidth: 0 }}>
             <p
@@ -323,6 +164,7 @@ export default function Home() {
 
       {/* ── 6. Video Clip ───────────────────────────────────────────────── */}
       <section
+        data-nav-theme="dark"
         style={{
           background: "#000",
           position: "relative",
@@ -364,7 +206,7 @@ export default function Home() {
       </section>
 
       {/* ── 7. Select Interaction ───────────────────────────────────────── */}
-      <section style={{ background: "#fff", paddingTop: "120px", paddingBottom: "60px" }}>
+      <section data-nav-theme="light" style={{ background: "#fff", paddingTop: "120px", paddingBottom: "60px" }}>
         <div
           style={{
             display: "flex",

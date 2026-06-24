@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
 import "./globals.css"
@@ -8,9 +8,15 @@ export const metadata: Metadata = {
   description: "Objects that move with you.",
 }
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#ffffff",
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body>
         <Nav />
         {children}

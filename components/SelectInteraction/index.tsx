@@ -1,9 +1,12 @@
 "use client"
 
 import { useCallback, useRef } from "react"
+import { useRouter } from "next/navigation"
 import * as THREE from "three"
 import { useThreeScene } from "./useThreeScene"
 import { useCarousel } from "./useCarousel"
+
+const PRODUCT_SLUGS = ["orbit", "twiddle", "tipsy"]
 
 function addFogPlane(group: THREE.Group) {
   const fogPlane = new THREE.Mesh(
@@ -23,6 +26,7 @@ function addFogPlane(group: THREE.Group) {
 export default function SelectInteraction() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const modelsRef = useRef<(THREE.Group | null)[]>([null, null, null])
+  const router = useRouter()
 
   const { applyPositions, rotate, label, frontIdx } = useCarousel(modelsRef)
 
@@ -41,7 +45,8 @@ export default function SelectInteraction() {
     <div style={{ position: "relative", width: "100%", aspectRatio: "1440 / 900" }}>
       <canvas
         ref={canvasRef}
-        style={{ width: "100%", height: "100%", display: "block" }}
+        onClick={() => router.push(`/product/${PRODUCT_SLUGS[frontIdx]}`)}
+        style={{ width: "100%", height: "100%", display: "block", cursor: "pointer" }}
       />
 
       {/* Left arrow */}
